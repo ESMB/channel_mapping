@@ -17,10 +17,9 @@ beads_file=r'/Users/Mathew/Dropbox (Cambridge University)/Ed Code/Channel_Mappin
 Filename='Unmapped.tif'
 
 # Paths to mapy
-pathList.append(r"/Users/Mathew/Dropbox (Cambridge University)/Ed Code/Channel_Mapping/Beads_2020-08-11_16-22-03/1/")
-pathList.append(r"/Users/Mathew/Dropbox (Cambridge University)/Ed Code/Channel_Mapping/Beads_2020-08-11_16-22-03/2/")
-pathList.append(r"/Users/Mathew/Dropbox (Cambridge University)/Ed Code/Channel_Mapping/Beads_2020-08-11_16-22-03/3/")
-
+pathList.append(r"/Users/Mathew/Dropbox (Cambridge University)/Ed Code/Channel_Mapping/Beads_2020-08-11_16-22-03/TestSamples/1/")
+pathList.append(r"/Users/Mathew/Dropbox (Cambridge University)/Ed Code/Channel_Mapping/Beads_2020-08-11_16-22-03/TestSamples/2/")
+pathList.append(r"/Volumes/BirdBox2/Optosplit/Optosplit_TIRF200811_Optosplit_Medulla47_als47_ALS_2020-08-11_17-56-57/")
 
 ######## This is the bead mapping part ###########
 
@@ -29,8 +28,8 @@ img = io.imread(beads_file)
 
 
 # Extract the red and green parts of the image (only looks at the first frame, which is fine for beads)         
-greenSlice = (img[0,0:255,0:512]/255).astype(np.uint8)
-redSlice = (img[0,256:511,0:512]/255).astype(np.uint8)
+greenSlice = (img[0,0:256,0:512]/255).astype(np.uint8)
+redSlice = (img[0,256:512,0:512]/255).astype(np.uint8)
 
 # Perform the image registration
 result = ird.similarity(redSlice, greenSlice, numiter=3)
@@ -87,8 +86,8 @@ for path in pathList:
     
     
     # Extract the red and green parts of the image         
-    greenSlice2 = (img_to_convert[0,0:255,0:512]).astype('uint16')
-    redSlice2 = (img_to_convert[0,256:511,0:512]).astype('uint16')
+    greenSlice2 = (img_to_convert[0:256,0:512]).astype('uint16')
+    redSlice2 = (img_to_convert[256:512,0:512]).astype('uint16')
     
     newresult=ird.transform_img_dict(greenSlice2, result, bgval=None, order=1, invert=False).astype('uint16')
     
